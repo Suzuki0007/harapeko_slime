@@ -26,7 +26,7 @@ struct PlayerStatus {
 #define	MAP_H		(17)
 
 // ステージデータ数
-#define	STAGE_MAX	(3)
+#define	STAGE_MAX	(4)
 
 // 手の保存（戻せる）数
 #define	STEPSAVE_NUM	(21)
@@ -80,68 +80,88 @@ bool isGameEnd = false; // ゲーム終了フラグ（true:ゲーム終了、false:ゲーム継続中
 // ステージデータ(mapとboxとplayer位置を混ぜたもの)
 // // 0:床, 1:壁, 2:食べ物(弱), 3:食べ物(中), 4:食べ物(強), 5:箱(弱), 6:箱(中), 7:箱(強), 8透明(base),  9:player, 10:ゴール1, 11:ゴール2, 12:ゴール3, 13:ゴール4, 14最終ゴール, 15最終ゴール2, 16最終ゴール3, 17最終ゴール4, 18食べ物(最強)
 int stage[STAGE_MAX][MAP_W * MAP_H] = {
-	{	// stage 0
+	//stage0
+	{
+		8,8,8,8,8,8,1,1,1,1,1,1,1,1,10,11,1,1,1,1,1,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,1,1,1,1,1,12,13,1,1,1,1,1,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,1,1,1,1,1,0,3,1,0,0,2,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,1,1,1,1,1,0,2,1,0,0,1,2,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,1,1,1,1,1,0,2,1,0,0,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,1,1,1,1,1,5,1,1,0,0,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,0,0,0,0,2,5,0,1,0,0,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,2,1,0,0,1,1,0,1,0,1,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,0,0,0,0,2,1,1,1,0,2,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,0,0,0,0,1,0,0,5,0,0,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,0,0,0,0,0,0,2,1,0,0,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,0,0,0,1,1,0,0,1,0,0,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,0,0,0,1,0,0,0,1,0,0,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,0,1,2,1,2,1,0,1,0,0,0,0,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,0,2,0,1,0,2,0,1,0,9,0,1,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,
 		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-		8,8,8,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,
-		8,8,8,8,1,1,0,0,2,0,0,0,1,1,1,1,1,1,0,0,1,10,11,1,8,8,8,8,8,8,
-		8,8,8,8,1,2,1,2,1,2,0,5,5,0,1,1,1,0,0,2,1,12,13,1,8,8,8,8,8,8,
-		8,8,8,8,1,0,0,0,0,0,1,0,5,0,1,1,0,0,9,0,0,2,3,1,8,8,8,8,8,8,
-		8,8,8,8,1,2,0,0,0,0,1,0,0,0,1,0,0,2,5,1,1,0,0,1,8,8,8,8,8,8,
-		8,8,8,8,1,1,5,1,0,1,1,0,2,1,1,1,1,1,0,0,0,5,1,1,8,8,8,8,8,8,
-		8,8,8,8,1,0,0,1,2,2,1,1,2,1,1,0,0,0,0,0,0,0,0,1,8,8,8,8,8,8,
-		8,8,8,8,1,0,1,1,1,1,1,0,0,1,0,0,1,3,0,0,1,1,1,1,8,8,8,8,8,8,
-		8,8,8,8,1,0,1,2,0,0,1,0,5,1,0,1,2,0,0,0,5,0,0,1,8,8,8,8,8,8,
-		8,8,8,8,1,0,0,0,0,0,1,5,0,2,0,2,0,0,0,2,1,0,2,1,8,8,8,8,8,8,
-		8,8,8,8,1,9,1,2,0,2,1,0,0,0,0,0,0,0,0,0,1,2,1,1,8,8,8,8,8,8,
-		8,8,8,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,
-		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-
 	},
+
 	// stage 1
 	{
-		1,1,1,1,8,8,8,8,8,8,8,8,1,1,1,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-		1,10,11,1,1,1,1,1,1,1,1,8,1,3,1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,8,
-		1,12,13,1,0,0,0,0,0,0,1,1,1,2,1,0,0,6,2,1,1,1,1,1,8,8,8,8,8,8,
-		1,0,0,1,0,0,0,1,0,0,1,0,0,5,0,1,0,0,5,0,0,1,2,1,8,8,8,8,8,8,
-		1,0,0,0,0,0,0,2,6,0,0,0,6,0,0,0,0,1,0,5,0,1,0,1,8,8,8,8,8,8,
-		1,1,6,1,1,2,0,0,0,0,1,0,5,0,2,0,0,1,0,1,0,0,0,1,8,8,8,8,8,8,
-		8,1,0,3,0,6,1,1,1,1,1,1,1,1,1,1,1,1,5,1,0,0,0,1,8,8,8,8,8,8,
-		8,1,1,1,1,0,1,0,0,0,0,0,0,5,0,1,2,0,0,1,0,0,1,1,8,8,8,8,8,8,
-		8,8,1,1,0,0,1,0,0,0,0,3,0,5,0,0,1,0,0,6,0,2,1,8,8,8,8,8,8,8,
-		8,1,1,0,0,0,0,0,0,0,0,1,1,0,1,2,1,1,0,1,1,0,1,8,8,8,8,8,8,8,
-		8,1,1,5,0,0,1,2,0,0,0,0,2,1,1,0,0,0,6,2,0,0,1,8,8,8,8,8,8,8,
-		1,1,0,0,0,1,1,1,1,1,1,1,1,1,2,0,0,0,0,1,1,1,1,8,8,8,8,8,8,8,
-		1,0,0,0,0,1,8,8,8,8,8,8,8,1,1,1,1,1,1,1,1,8,8,8,8,8,8,8,8,8,
-		1,0,3,2,1,1,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-		1,0,0,9,1,1,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-		1,1,1,1,1,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+		8,8,8,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,10,11,1,8,8,8,8,8,8,
+		8,8,8,8,1,1,0,0,2,0,0,0,1,1,1,1,2,0,0,0,1,12,13,1,8,8,8,8,8,8,
+		8,8,8,8,1,2,1,0,1,2,0,5,5,0,1,1,0,0,0,2,1,0,0,1,8,8,8,8,8,8,
+		8,8,8,8,1,0,0,0,0,0,1,0,5,0,1,1,2,0,0,6,0,0,3,1,8,8,8,8,8,8,
+		8,8,8,8,1,2,0,2,0,0,1,0,0,1,2,0,0,0,5,0,5,0,0,1,8,8,8,8,8,8,
+		8,8,8,8,1,1,5,1,0,0,1,0,0,1,1,1,1,1,0,0,1,5,1,1,8,8,8,8,8,8,
+		8,8,8,8,1,0,0,1,0,0,1,1,2,1,1,0,0,0,0,0,0,0,0,1,8,8,8,8,8,8,
+		8,8,8,8,1,0,1,1,1,1,1,0,0,1,0,0,1,0,0,0,1,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,1,0,1,2,0,0,1,0,5,1,0,1,0,0,0,0,5,0,0,1,8,8,8,8,8,8,
+		8,8,8,8,1,0,0,0,0,0,1,5,0,2,0,2,0,0,0,0,1,0,2,1,8,8,8,8,8,8,
+		8,8,8,8,1,9,1,2,0,2,1,0,0,0,0,0,0,0,0,0,1,3,1,1,8,8,8,8,8,8,
+		8,8,8,8,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,8,
+		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
 		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
 	},
 	// stage 2
 	{
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,
-		1,5,0,1,0,6,1,0,0,1,5,0,6,0,0,0,1,0,1,3,0,0,2,7,1,8,8,8,8,8,
-		1,0,0,0,6,0,0,0,0,6,0,0,0,6,0,7,0,0,0,7,0,0,2,2,1,8,8,8,8,8,
-		1,0,2,0,6,0,6,3,0,7,0,0,6,7,0,0,7,2,7,0,0,0,0,0,1,8,8,8,8,8,
-		1,0,6,0,6,5,1,14,15,1,1,1,1,1,1,1,1,1,1,1,0,6,0,0,1,8,8,8,8,8,
-		1,0,2,1,0,0,1,16,17,0,0,0,1,0,0,0,0,0,2,1,1,1,5,1,1,8,8,8,8,8,
-		1,0,0,2,6,7,0,18,18,5,1,0,0,0,1,0,7,7,0,1,0,0,0,0,1,8,8,8,8,8,
-		1,0,0,0,0,1,2,0,0,0,1,1,1,5,0,7,1,18,0,7,0,0,0,0,1,8,8,8,8,8,
-		1,0,0,0,0,1,4,3,0,6,0,0,0,0,0,7,0,0,7,0,6,0,0,0,1,8,8,8,8,8,
-		1,1,5,6,5,1,1,1,1,1,1,7,1,0,1,1,7,1,2,0,6,0,6,0,1,8,8,8,8,8,
-		1,0,0,0,0,1,1,0,0,6,0,0,7,7,7,7,0,3,5,5,0,6,1,0,1,8,8,8,8,8,
-		1,0,0,0,7,1,1,7,0,7,0,0,6,0,0,0,7,5,0,2,0,0,1,0,1,8,8,8,8,8,
-		1,0,6,0,0,7,0,0,0,0,6,6,0,0,0,0,0,7,0,6,0,1,0,0,1,8,8,8,8,8,
-		1,0,0,7,0,0,1,1,0,6,0,0,0,0,0,0,0,7,3,5,5,1,3,2,1,8,8,8,8,8,
-		1,0,3,1,4,0,1,1,0,7,1,0,1,0,0,0,4,1,5,9,3,1,7,7,1,8,8,8,8,8,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,
+		8,1,10,11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,
+		8,1,12,13,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,
+		8,1,0,0,1,2,0,0,0,0,0,1,1,1,2,1,0,0,6,0,1,1,1,1,1,8,8,8,8,8,
+		8,1,0,0,1,0,0,2,1,0,0,1,0,0,5,2,1,0,0,5,2,0,1,2,1,8,8,8,8,8,
+		8,1,0,0,0,0,0,0,2,6,0,0,0,6,0,0,5,0,0,0,5,0,1,0,1,8,8,8,8,8,
+		8,1,1,6,1,1,0,0,0,0,0,1,0,5,0,0,0,1,1,0,1,0,0,0,1,8,8,8,8,8,
+		8,1,1,0,4,0,6,1,1,1,1,1,1,1,1,1,1,1,1,5,1,0,0,0,1,8,8,8,8,8,
+		8,1,1,1,1,1,0,1,0,0,0,0,0,0,5,0,1,2,0,0,1,0,0,1,1,8,8,8,8,8,
+		8,1,1,1,1,0,0,1,0,0,0,0,0,3,5,0,0,1,0,0,6,0,2,1,1,8,8,8,8,8,
+		8,1,1,1,0,0,0,0,0,0,0,0,1,1,0,1,2,1,1,0,1,1,0,1,1,8,8,8,8,8,
+		8,1,1,1,5,5,0,1,2,0,0,0,0,2,1,1,0,0,0,6,2,0,0,1,1,8,8,8,8,8,
+		8,1,1,0,0,0,1,1,1,1,1,1,1,1,1,2,0,0,0,0,1,1,1,1,1,8,8,8,8,8,
+		8,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,
+		8,1,0,3,2,1,1,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+		8,1,0,9,0,1,1,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+		8,1,1,1,1,1,1,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
 		8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
-
 	},
 
+	// stage 3
+	{
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,
+		1,0,0,1,0,6,1,0,0,1,0,0,6,0,0,0,1,2,1,3,0,0,2,7,1,8,8,8,8,8,
+		1,0,0,0,6,0,0,0,0,6,0,0,0,6,0,7,0,0,0,7,0,0,0,2,1,8,8,8,8,8,
+		1,0,2,0,6,0,6,2,0,7,0,0,6,7,0,0,2,6,7,0,0,0,0,0,1,8,8,8,8,8,
+		1,0,6,0,6,0,1,14,15,1,1,0,1,1,1,1,1,0,1,1,0,6,0,0,1,8,8,8,8,8,
+		1,0,0,1,0,0,1,16,17,0,0,7,1,0,0,0,0,0,0,1,1,1,5,1,1,8,8,8,8,8,
+		1,0,0,2,6,7,0,18,18,0,1,0,0,0,1,18,7,7,0,1,0,0,3,0,1,8,8,8,8,8,
+		1,0,0,0,0,1,2,0,0,0,1,1,1,5,0,7,1,2,0,7,0,0,0,0,1,8,8,8,8,8,
+		1,0,0,2,0,1,4,3,0,6,0,0,0,0,0,7,0,0,7,0,5,0,0,0,1,8,8,8,8,8,
+		1,1,5,6,5,1,1,1,1,1,1,7,1,0,2,1,7,1,0,0,5,0,0,0,1,8,8,8,8,8,
+		1,0,0,0,0,1,1,0,0,6,0,0,7,6,7,7,0,3,5,5,0,6,1,0,1,8,8,8,8,8,
+		1,0,0,0,0,1,1,7,0,7,0,0,6,0,0,0,7,5,0,0,0,3,1,0,1,8,8,8,8,8,
+		1,0,6,0,0,7,0,0,0,0,6,6,0,0,0,0,0,0,6,0,0,1,0,0,1,8,8,8,8,8,
+		1,0,0,7,0,0,1,1,0,6,0,0,0,0,0,0,4,7,2,6,5,1,3,2,1,8,8,8,8,8,
+		1,0,3,1,4,0,1,1,0,7,1,0,1,0,0,0,0,1,5,9,3,1,7,7,1,8,8,8,8,8,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,8,8,8,8,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,8,8,8,8,
+	},
 
 };
 
@@ -152,7 +172,7 @@ int cgPlayer[4][3 * 4];			// プレイヤー
 int playerDrowX, playerDrowY;	// プレイヤーの描画位置（チップ単位）
 int cgBox[3];					// 箱
 int cgMap;						// マップチップ
-int cggoal[3][2 * 2];			// ゴール2
+int cggoal[4][2 * 2];			// ゴール2
 int operation;					// 操作用画像（ボタンなど）
 int energy_ui_slime;			// エネルギーUI（外側）
 int energy_ui_textbox;			// エネルギーUI（内側）
@@ -194,8 +214,8 @@ int touch;					//0:タッチしていない 1:タッチしている
 void StageInit(int stageNo) {
 	// stage[stageNo]から、map[], box[], player座標を生成する
 	int x, y;
-	for (y = 0; y < MAP_H; y++) {
-		for (x = 0; x < MAP_W; x++) {
+	for(y = 0; y < MAP_H; y++) {
+		for(x = 0; x < MAP_W; x++) {
 
 			// stage[stageNo][] から、チップ番号を取り出す
 			// 0:床, 1:壁, 2:食べ物(弱), 3:食べ物(中), 4:食べ物(強), 5:箱(弱), 6:箱(中), 7:箱(強), 8透明(base),  9:player, 10:ゴール1, 11:ゴール2, 12:ゴール3, 13:ゴール4, 14最終ゴール, 15最終ゴール2, 16最終ゴール3, 17最終ゴール4, 18食べ物(最強)
@@ -203,30 +223,30 @@ void StageInit(int stageNo) {
 
 			// box[]の書き込み
 			box[y * MAP_W + x] = 0;
-			if (chip_no == 5) { box[y * MAP_W + x] = 5; } // 箱(弱)
-			if (chip_no == 6) { box[y * MAP_W + x] = 6; } // 箱(中)
-			if (chip_no == 7) { box[y * MAP_W + x] = 7; } // 箱(強)
+			if(chip_no == 5) { box[y * MAP_W + x] = 5; } // 箱(弱)
+			if(chip_no == 6) { box[y * MAP_W + x] = 6; } // 箱(中)
+			if(chip_no == 7) { box[y * MAP_W + x] = 7; } // 箱(強)
 
 			//item[]の書き込み
 			item[y * MAP_W + x] = 0; // アイテムは初期化
-			if (chip_no == 2) { item[y * MAP_W + x] = 2; }	// 食べ物（弱）
-			if (chip_no == 3) { item[y * MAP_W + x] = 3; }	// 食べ物（中）
-			if (chip_no == 4) { item[y * MAP_W + x] = 4; }	// 食べ物（強）
-			if (chip_no == 18) { item[y * MAP_W + x] = 18; }// 食べ物（最強）
+			if(chip_no == 2) { item[y * MAP_W + x] = 2; }	// 食べ物（弱）
+			if(chip_no == 3) { item[y * MAP_W + x] = 3; }	// 食べ物（中）
+			if(chip_no == 4) { item[y * MAP_W + x] = 4; }	// 食べ物（強）
+			if(chip_no == 18) { item[y * MAP_W + x] = 18; }// 食べ物（最強）
 
 			map[y * MAP_W + x] = 0;
 			// map[]の書き込み
-			if (chip_no == 0) { map[y * MAP_W + x] = 0; }	// 床
-			if (chip_no == 1) { map[y * MAP_W + x] = 1; }	// 壁
-			if (chip_no == 2) { item[y * MAP_W + x] = 2; }	// 食べ物（弱）
-			if (chip_no == 3) { item[y * MAP_W + x] = 3; }	// 食べ物（中）
-			if (chip_no == 4) { item[y * MAP_W + x] = 4; }	// 食べ物（強）
-			if (chip_no == 5) { box[y * MAP_W + x] = 5; }	// 箱(弱)
-			if (chip_no == 6) { box[y * MAP_W + x] = 6; }	// 箱(中)
-			if (chip_no == 7) { box[y * MAP_W + x] = 7; }	// 箱(強)
-			if (chip_no == 8) { map[y * MAP_W + x] = 8; }	//透明（床）
+			if(chip_no == 0) { map[y * MAP_W + x] = 0; }	// 床
+			if(chip_no == 1) { map[y * MAP_W + x] = 1; }	// 壁
+			if(chip_no == 2) { item[y * MAP_W + x] = 2; }	// 食べ物（弱）
+			if(chip_no == 3) { item[y * MAP_W + x] = 3; }	// 食べ物（中）
+			if(chip_no == 4) { item[y * MAP_W + x] = 4; }	// 食べ物（強）
+			if(chip_no == 5) { box[y * MAP_W + x] = 5; }	// 箱(弱)
+			if(chip_no == 6) { box[y * MAP_W + x] = 6; }	// 箱(中)
+			if(chip_no == 7) { box[y * MAP_W + x] = 7; }	// 箱(強)
+			if(chip_no == 8) { map[y * MAP_W + x] = 8; }	//透明（床）
 
-			if (chip_no == 9) {								// プレイヤー
+			if(chip_no == 9) {								// プレイヤー
 				// ここにプレイヤー座標を設定
 				map[y * MAP_W + x] = 0;
 				playerX = x;
@@ -240,15 +260,15 @@ void StageInit(int stageNo) {
 			}
 
 			// ゴールの設定
-			if (chip_no == 10) { map[y * MAP_W + x] = 10; }		// ゴール1
-			if (chip_no == 11) { map[y * MAP_W + x] = 11; }		// ゴール2
-			if (chip_no == 12) { map[y * MAP_W + x] = 12; }		// ゴール3
-			if (chip_no == 13) { map[y * MAP_W + x] = 13; }		// ゴール4
-			if (chip_no == 14) { map[y * MAP_W + x] = 14; }		// 最終ゴール
-			if (chip_no == 15) { map[y * MAP_W + x] = 15; }		// 最終ゴール2
-			if (chip_no == 16) { map[y * MAP_W + x] = 16; }		// 最終ゴール3
-			if (chip_no == 17) { map[y * MAP_W + x] = 17; }		// 最終ゴール4
-			if (chip_no == 18) { item[y * MAP_W + x] = 18; }	// 食べ物（最強）
+			if(chip_no == 10) { map[y * MAP_W + x] = 10; }		// ゴール1
+			if(chip_no == 11) { map[y * MAP_W + x] = 11; }		// ゴール2
+			if(chip_no == 12) { map[y * MAP_W + x] = 12; }		// ゴール3
+			if(chip_no == 13) { map[y * MAP_W + x] = 13; }		// ゴール4
+			if(chip_no == 14) { map[y * MAP_W + x] = 14; }		// 最終ゴール
+			if(chip_no == 15) { map[y * MAP_W + x] = 15; }		// 最終ゴール2
+			if(chip_no == 16) { map[y * MAP_W + x] = 16; }		// 最終ゴール3
+			if(chip_no == 17) { map[y * MAP_W + x] = 17; }		// 最終ゴール4
+			if(chip_no == 18) { item[y * MAP_W + x] = 18; }	// 食べ物（最強）
 
 
 		}
@@ -261,63 +281,63 @@ void StageInit(int stageNo) {
 	touch = 0; // タッチしていない状態にする
 }
 
-// 1手保存する関数
-void SaveOneStep() {
-
-	// stepsave_*****[0?] → [1?]にコピー
-	// iは後ろから回さないといけない
-	for (int i = STEPSAVE_NUM - 2; i >= 0; i--) {
-		// map, box
-		for (int n = 0; n < MAP_W * MAP_H; n++) {
-			stepsave_map[i + 1][n] = stepsave_map[i][n];
-			stepsave_box[i + 1][n] = stepsave_box[i][n];
-		}
-		// playerX,Y
-		stepsave_playerX[i + 1] = stepsave_playerX[i];
-		stepsave_playerY[i + 1] = stepsave_playerY[i];
-	}
-
-	// stepsave_*****[0] に、現状を保存
-	for (int n = 0; n < MAP_W * MAP_H; n++) {
-		stepsave_map[0][n] = map[n];
-		stepsave_box[0][n] = box[n];
-	}
-	stepsave_playerX[0] = playerX;
-	stepsave_playerY[0] = playerY;
-
-	// 手の保存データカウンタを増やす
-	stepsave_cnt++;
-	if (stepsave_cnt > STEPSAVE_NUM) { stepsave_cnt = STEPSAVE_NUM; }
-}
+//// 1手保存する関数
+//void SaveOneStep() {
+//
+//	// stepsave_*****[0?] → [1?]にコピー
+//	// iは後ろから回さないといけない
+//	for (int i = STEPSAVE_NUM - 2; i >= 0; i--) {
+//		// map, box
+//		for (int n = 0; n < MAP_W * MAP_H; n++) {
+//			stepsave_map[i + 1][n] = stepsave_map[i][n];
+//			stepsave_box[i + 1][n] = stepsave_box[i][n];
+//		}
+//		// playerX,Y
+//		stepsave_playerX[i + 1] = stepsave_playerX[i];
+//		stepsave_playerY[i + 1] = stepsave_playerY[i];
+//	}
+//
+//	// stepsave_*****[0] に、現状を保存
+//	for (int n = 0; n < MAP_W * MAP_H; n++) {
+//		stepsave_map[0][n] = map[n];
+//		stepsave_box[0][n] = box[n];
+//	}
+//	stepsave_playerX[0] = playerX;
+//	stepsave_playerY[0] = playerY;
+//
+//	// 手の保存データカウンタを増やす
+//	stepsave_cnt++;
+//	if (stepsave_cnt > STEPSAVE_NUM) { stepsave_cnt = STEPSAVE_NUM; }
+//}
 
 // 1手戻す関数
-void BackOneStep() {
-	// 手の保存データカウンタは1以上あるか？
-	if (stepsave_cnt > 0) {
-		// stepsave_*****[0] を、現状にコピー
-		for (int n = 0; n < MAP_W * MAP_H; n++) {
-			map[n] = stepsave_map[0][n];
-			box[n] = stepsave_box[0][n];
-		}
-		playerX = stepsave_playerX[0];
-		playerY = stepsave_playerY[0];
-
-		// stepsave_*****[1?] → [0?]にコピー
-		for (int i = 0; i < STEPSAVE_NUM - 1; i++) {
-			// map, box
-			for (int n = 0; n < MAP_W * MAP_H; n++) {
-				stepsave_map[i][n] = stepsave_map[i + 1][n];
-				stepsave_box[i][n] = stepsave_box[i + 1][n];
-			}
-			// playerX,Y
-			stepsave_playerX[i] = stepsave_playerX[i + 1];
-			stepsave_playerY[i] = stepsave_playerY[i + 1];
-		}
-
-		// 手の保存データカウンタを減らす
-		stepsave_cnt--;
-	}
-}
+//void BackOneStep() {
+//	// 手の保存データカウンタは1以上あるか？
+//	if (stepsave_cnt > 0) {
+//		// stepsave_*****[0] を、現状にコピー
+//		for (int n = 0; n < MAP_W * MAP_H; n++) {
+//			map[n] = stepsave_map[0][n];
+//			box[n] = stepsave_box[0][n];
+//		}
+//		playerX = stepsave_playerX[0];
+//		playerY = stepsave_playerY[0];
+//
+//		// stepsave_*****[1?] → [0?]にコピー
+//		for (int i = 0; i < STEPSAVE_NUM - 1; i++) {
+//			// map, box
+//			for (int n = 0; n < MAP_W * MAP_H; n++) {
+//				stepsave_map[i][n] = stepsave_map[i + 1][n];
+//				stepsave_box[i][n] = stepsave_box[i + 1][n];
+//			}
+//			// playerX,Y
+//			stepsave_playerX[i] = stepsave_playerX[i + 1];
+//			stepsave_playerY[i] = stepsave_playerY[i + 1];
+//		}
+//
+//		// 手の保存データカウンタを減らす
+//		stepsave_cnt--;
+//	}
+//}
 
 
 
@@ -347,8 +367,9 @@ void AppInit() {
 
 	cgMap = LoadGraph("res/Stage_01_01.png");//背景
 	LoadDivGraph("res/goal1_03.png", 2 * 2, 2, 2, 64, 64, cggoal[0]);//ゴール1
-	LoadDivGraph("res/goal2_02.png", 2 * 2, 2, 2, 64, 64, cggoal[1]);//ゴール2
-	LoadDivGraph("res/goal3.png", 2 * 2, 2, 2, 64, 64, cggoal[2]);//ゴール3
+	LoadDivGraph("res/goal1_03.png", 2 * 2, 2, 2, 64, 64, cggoal[1]);//ゴール1
+	LoadDivGraph("res/goal2_02.png", 2 * 2, 2, 2, 64, 64, cggoal[2]);//ゴール2
+	LoadDivGraph("res/goal3.png", 2 * 2, 2, 2, 64, 64, cggoal[3]);//ゴール3
 
 	LoadDivGraph("res/slyme_small_02.png", 3 * 4, 3, 4, 64, 64, cgPlayer[0]);	// スライム小
 	LoadDivGraph("res/slime_middle.png", 3 * 4, 3, 4, 64, 64, cgPlayer[1]);	// スライム中
@@ -358,7 +379,7 @@ void AppInit() {
 	operation = LoadGraph("res/operation_screen2.png");			// 操作用画像（ボタンなど）
 	energy_ui_slime = LoadGraph("res/slime_ui_outside_02.png");	// エネルギーUI（外側）
 	energy_ui_textbox = LoadGraph("res/slime_ui_inside_02.png");	// エネルギーUI（内側）
-	for (int i = 0; i < 10; i++) {								// エネルギーUI（数字）
+	for(int i = 0; i < 10; i++) {								// エネルギーUI（数字）
 		char filename[999];
 		sprintf(filename, "res/number_%d.png", i);
 		energy_ui_number[i] = LoadGraph(filename);
@@ -370,28 +391,28 @@ void AppInit() {
 	title_image = LoadGraph("res/Title.png");			// タイトル画像
 
 	//シナリオ
-	for (int i = 0; i < SCENARIO_NUMBER; i++) {								// エネルギーUI（数字）
+	for(int i = 0; i < SCENARIO_NUMBER; i++) {								// エネルギーUI（数字）
 		char filename[999];
 		sprintf(filename, "res/textbox_%d.png", i + 1);
 		scenario_text_image[i] = LoadGraph(filename);
 	}
 
 	//ゲームクリアシナリオ
-	for (int i = 0; i < SCENARIO_CLEAR_NUMBER - 3; i++) {								// エネルギーUI（数字）
+	for(int i = 0; i < SCENARIO_CLEAR_NUMBER - 3; i++) {								// エネルギーUI（数字）
 		char filename[999];
 		sprintf(filename, "res/textbox_clear_%d.png", i + 1);
 		scenario_clear_text_image[i] = LoadGraph(filename);
 	}
 
 	//スライム立ち絵
-	for (int i = 0; i < 8; i++) {
+	for(int i = 0; i < 8; i++) {
 		char filename[999];
 		sprintf(filename, "res/slime_%d.png", i + 1);
 		scenario_slime[i] = LoadGraph(filename);
 	}
 
 	//女の子立ち絵
-	for (int i = 0; i < 5; i++) {
+	for(int i = 0; i < 5; i++) {
 		char filename[999];
 		sprintf(filename, "res/girl_%d.png", i + 1);
 		scenario_girl[i] = LoadGraph(filename);
@@ -419,8 +440,7 @@ void AppInit() {
 
 // アプリの解放
 // 終了時に1回だけ実行される
-void AppRelease() {
-}
+void AppRelease() {}
 
 
 
@@ -441,8 +461,8 @@ void FrameInput() {
 
 // フレーム処理：計算
 void FrameProcess() {
-	if (phase == 0) {//タイトルフェーズ
-		if (gTrg & PAD_INPUT_10)
+	if(phase == 0) {//タイトルフェーズ
+		if(gTrg & PAD_INPUT_10)
 		{
 			phase = 1;
 		}
@@ -453,15 +473,15 @@ void FrameProcess() {
 		return; // タイトル中は他の処理をしない
 	}
 
-	if (phase == 1) {//シナリオフェーズ
-		if (gTrg & PAD_INPUT_9) {
+	if(phase == 1) {//シナリオフェーズ
+		if(gTrg & PAD_INPUT_9) {
 			//phase = 2; //開発者用シナリオ終了フェーズへ移行
 		}
 		else
 		{
-			if (gTrg & PAD_INPUT_10)
+			if(gTrg & PAD_INPUT_10)
 			{
-				if (scenarioCnt < SCENARIO_NUMBER - 1) {
+				if(scenarioCnt < SCENARIO_NUMBER - 1) {
 					scenarioCnt++;	// シナリオカウンタを進める
 				}
 				else
@@ -478,15 +498,15 @@ void FrameProcess() {
 		return; // シナリオ中は他の処理をしない
 	}
 
-	if (phase == 3) {//ゲームクリアフェーズ
-		if (gTrg & PAD_INPUT_10)
+	if(phase == 3) {//ゲームクリアフェーズ
+		if(gTrg & PAD_INPUT_10)
 		{
-			if (clear_scenario < SCENARIO_CLEAR_NUMBER - 1) {
+			if(clear_scenario < SCENARIO_CLEAR_NUMBER - 1) {
 				clear_scenario++;	// シナリオカウンタを進める
 			}
 			else
 			{
-				phase == 100;
+				isGameEnd = true;
 			}
 		}
 		else
@@ -496,22 +516,22 @@ void FrameProcess() {
 		return; // シナリオ中は他の処理をしない
 	}
 
-	if (phase == 4) {//ゲームクリアフェース
+	if(phase == 4) {//ゲームクリアフェース
 		return; // タイトル中は他の処理をしない
 	}
 
 
-	if (phase == 5) {//ゲームオーバーフェース
+	if(phase == 5) {//ゲームオーバーフェース
 		return; // タイトル中は他の処理をしない
 	}
 
 
-	if (playerX * CHIP_W != playerDrowX || playerY * CHIP_H != playerDrowY) {
+	if(playerX * CHIP_W != playerDrowX || playerY * CHIP_H != playerDrowY) {
 		int speed = 4;	// キャラクターの移動速度
-		if (playerX * CHIP_W < playerDrowX) { playerDrowX -= speed; }	// 左に移動
-		if (playerX * CHIP_W > playerDrowX) { playerDrowX += speed; }	// 右に移動
-		if (playerY * CHIP_H < playerDrowY) { playerDrowY -= speed; }	// 上に移動
-		if (playerY * CHIP_H > playerDrowY) { playerDrowY += speed; }	// 下に移動
+		if(playerX * CHIP_W < playerDrowX) { playerDrowX -= speed; }	// 左に移動
+		if(playerX * CHIP_W > playerDrowX) { playerDrowX += speed; }	// 右に移動
+		if(playerY * CHIP_H < playerDrowY) { playerDrowY -= speed; }	// 上に移動
+		if(playerY * CHIP_H > playerDrowY) { playerDrowY += speed; }	// 下に移動
 	}
 	else {
 
@@ -524,25 +544,25 @@ void FrameProcess() {
 		int move_x = 0;
 		int move_y = 0;
 
-		// 何か方向キーを押したら今の位置を保存
-		if (gTrg & PAD_INPUT_LEFT + PAD_INPUT_RIGHT + PAD_INPUT_UP + PAD_INPUT_DOWN) {
-			SaveOneStep();
-		}
+		//// 何か方向キーを押したら今の位置を保存
+		//if (gTrg & PAD_INPUT_LEFT + PAD_INPUT_RIGHT + PAD_INPUT_UP + PAD_INPUT_DOWN) {
+		//	SaveOneStep();
+		//}
 
 		// キー入力を判定して、主人公を移動させる
-		if (gTrg & PAD_INPUT_LEFT) { playerX -= chara.speed; move_x = -1; chara.arrow = ARROW_LF; }
-		if (gTrg & PAD_INPUT_RIGHT) { playerX += chara.speed; move_x = 1; chara.arrow = ARROW_RI; }
-		if (move_x == 0) {	// 斜め移動しないように、横移動を優先
-			if (gTrg & PAD_INPUT_UP) { playerY -= chara.speed; move_y = -1; chara.arrow = ARROW_UP; }
-			if (gTrg & PAD_INPUT_DOWN) { playerY += chara.speed; move_y = 1; chara.arrow = ARROW_DN; }
+		if(gTrg & PAD_INPUT_LEFT) { playerX -= chara.speed; move_x = -1; chara.arrow = ARROW_LF; }
+		if(gTrg & PAD_INPUT_RIGHT) { playerX += chara.speed; move_x = 1; chara.arrow = ARROW_RI; }
+		if(move_x == 0) {	// 斜め移動しないように、横移動を優先
+			if(gTrg & PAD_INPUT_UP) { playerY -= chara.speed; move_y = -1; chara.arrow = ARROW_UP; }
+			if(gTrg & PAD_INPUT_DOWN) { playerY += chara.speed; move_y = 1; chara.arrow = ARROW_DN; }
 			chara.animcnt++;	// アニメーションカウンタを進める
 		}
 
-		if (playerX != old_x || playerY != old_y) {
-			if (map[playerY * MAP_W + playerX] == 0) {
+		if(playerX != old_x || playerY != old_y) {
+			if(map[playerY * MAP_W + playerX] == 0) {
 				plHP.current_hp -= 1;	// 移動したのでHPを1減らす
 			}
-			if (plHP.current_hp < 0) {
+			if(plHP.current_hp < 0) {
 
 				plHP.current_hp = 0;	// 最低値を0にする
 			}
@@ -552,8 +572,8 @@ void FrameProcess() {
 		}
 
 		//回復
-		if (item[playerY * MAP_W + playerX] == 2) {
-			if (plHP.current_hp < plHP.max_hp) {
+		if(item[playerY * MAP_W + playerX] == 2) {
+			if(plHP.current_hp < plHP.max_hp) {
 				// ドットの上に立ったので、HPを回復する
 				int recovery_amount = 6;
 				plHP.current_hp += recovery_amount;
@@ -563,7 +583,7 @@ void FrameProcess() {
 				//DrawFormatString(0, 0, GetColor(255, 255, 255), "HP回復: %d", recovery_amount);
 				//ScreenFlip();
 
-				if (plHP.current_hp > plHP.max_hp) {
+				if(plHP.current_hp > plHP.max_hp) {
 					plHP.current_hp = plHP.max_hp;	// 最大値を超えないようにする
 				}
 			}
@@ -573,8 +593,8 @@ void FrameProcess() {
 		}
 
 		//回復
-		if (item[playerY * MAP_W + playerX] == 3) {
-			if (plHP.current_hp < plHP.max_hp) {
+		if(item[playerY * MAP_W + playerX] == 3) {
+			if(plHP.current_hp < plHP.max_hp) {
 				// ドットの上に立ったので、HPを回復する
 				int recovery_amount = 11;
 				plHP.current_hp += recovery_amount;
@@ -584,7 +604,7 @@ void FrameProcess() {
 				//DrawFormatString(0, 0, GetColor(255, 255, 255), "HP回復: %d", recovery_amount);
 				//ScreenFlip();
 
-				if (plHP.current_hp > plHP.max_hp) {
+				if(plHP.current_hp > plHP.max_hp) {
 					plHP.current_hp = plHP.max_hp;	// 最大値を超えないようにする
 				}
 			}
@@ -592,8 +612,8 @@ void FrameProcess() {
 			item[playerY * MAP_W + playerX] = 0;	// ドットを消す
 		}
 
-		if (item[playerY * MAP_W + playerX] == 4) {
-			if (plHP.current_hp < plHP.max_hp) {
+		if(item[playerY * MAP_W + playerX] == 4) {
+			if(plHP.current_hp < plHP.max_hp) {
 				// ドットの上に立ったので、HPを回復する
 				int recovery_amount = 21;
 				plHP.current_hp += recovery_amount;
@@ -602,7 +622,7 @@ void FrameProcess() {
 				//DrawFormatString(0, 0, GetColor(255, 255, 255), "HP回復: %d", recovery_amount);
 				//ScreenFlip();
 
-				if (plHP.current_hp > plHP.max_hp) {
+				if(plHP.current_hp > plHP.max_hp) {
 					plHP.current_hp = plHP.max_hp;	// 最大値を超えないようにする
 				}
 			}
@@ -611,8 +631,8 @@ void FrameProcess() {
 		}
 
 
-		if (item[playerY * MAP_W + playerX] == 18) {
-			if (plHP.current_hp < plHP.max_hp) {
+		if(item[playerY * MAP_W + playerX] == 18) {
+			if(plHP.current_hp < plHP.max_hp) {
 				// ドットの上に立ったので、HPを回復する
 				int recovery_amount = 41;
 				plHP.current_hp += recovery_amount;
@@ -621,7 +641,7 @@ void FrameProcess() {
 				//DrawFormatString(0, 0, GetColor(255, 255, 255), "HP回復: %d", recovery_amount);
 				//ScreenFlip();
 
-				if (plHP.current_hp > plHP.max_hp) {
+				if(plHP.current_hp > plHP.max_hp) {
 					plHP.current_hp = plHP.max_hp;	// 最大値を超えないようにする
 				}
 			}
@@ -630,7 +650,7 @@ void FrameProcess() {
 		}
 
 		// 移動した先が壁か？
-		if (map[playerY * MAP_W + playerX] == 1)
+		if(map[playerY * MAP_W + playerX] == 1)
 		{
 			// 移動した先が壁だったので、移動前の場所に戻す
 			playerX = old_x;
@@ -638,12 +658,12 @@ void FrameProcess() {
 
 		}
 
-		if (plHP.current_hp <= 40 && plHP.current_hp >= 29) {
+		if(plHP.current_hp <= 40 && plHP.current_hp >= 29) {
 			// さらに同じ方向のその先の座標を求める（移動方向用変数を足す）
 			int b = box[playerY * MAP_W + playerX];
 			// 移動した先に箱はあるか？
 			//if (box[playerY * MAP_W + playerX] == 5 || box[playerX * MAP_W + playerX] == 6 || box[playerX * MAP_W + playerX] == 7)
-			if (b == 5 || b == 6 || b == 7)
+			if(b == 5 || b == 6 || b == 7)
 			{
 				// 移動した先に箱があった。
 				// 押せるかどうか調べたい
@@ -655,7 +675,7 @@ void FrameProcess() {
 
 
 				// その先に、壁があるかを調べる
-				if (map[next_y * MAP_W + next_x] == 1)
+				if(map[next_y * MAP_W + next_x] == 1)
 				{
 					// 壁があるので押せない
 					push_ok = 0;
@@ -663,23 +683,23 @@ void FrameProcess() {
 				}
 
 				// その先に、箱があるかを調べる
-				if (box[next_y * MAP_W + next_x] == 5 || box[next_y * MAP_W + next_x] == 6 || box[next_y * MAP_W + next_x] == 7)
+				if(box[next_y * MAP_W + next_x] == 5 || box[next_y * MAP_W + next_x] == 6 || box[next_y * MAP_W + next_x] == 7)
 
 				{
 					// 箱があるので押せない
 					push_ok = 0;
 					plHP.current_hp += 1;	// 押したのでHPを1減らす
 				}
-				if (item[next_y * MAP_W + next_x] == 2 || item[next_y * MAP_W + next_x] == 3 || item[next_y * MAP_W + next_x] == 4 || item[next_y * MAP_W + next_x] == 18) {
+				if(item[next_y * MAP_W + next_x] == 2 || item[next_y * MAP_W + next_x] == 3 || item[next_y * MAP_W + next_x] == 4 || item[next_y * MAP_W + next_x] == 18) {
 					// アイテムがあるので押せない
 					push_ok = 0;
 					plHP.current_hp += 1;	// 押したのでHPを1減らす
 				}
 
 				// 調べた結果、押せる？
-				if (push_ok == 1)
+				if(push_ok == 1)
 				{
-					if (plHP.current_hp >= 2) {
+					if(plHP.current_hp >= 2) {
 						// HPが2以上なら、押せる
 						plHP.current_hp -= 1;	// 押したのでHPを1減らす
 					}
@@ -704,24 +724,24 @@ void FrameProcess() {
 			}
 		}
 
-		if (plHP.current_hp < 29 && plHP.current_hp >= 19 || plHP.current_hp >= 30) {
+		if(plHP.current_hp < 29 && plHP.current_hp >= 19 || plHP.current_hp >= 30) {
 			int b = box[playerY * MAP_W + playerX];
 			// 移動した先に箱はあるか？
-			if (b == 5 || b == 6 || b == 7)
+			if(b == 5 || b == 6 || b == 7)
 			{
-				if (b == 7) {
+				if(b == 7) {
 					playerX = old_x;
 					playerY = old_y;
 					plHP.current_hp += 1;	// 押したのでHPを1減らす
 				}
-				else if (b == 5 || b == 6) {
+				else if(b == 5 || b == 6) {
 					int push_ok = 1;
 					// さらに同じ方向のその先の座標を求める（移動方向用変数を足す）
 					int next_x = playerX + move_x;
 					int next_y = playerY + move_y;
 
 					// その先に、壁があるかを調べる
-					if (map[next_y * MAP_W + next_x] == 1)
+					if(map[next_y * MAP_W + next_x] == 1)
 					{
 						// 壁があるので押せない
 						push_ok = 0;
@@ -730,7 +750,7 @@ void FrameProcess() {
 
 					// その先に、箱があるかを調べる
 					int a = box[next_y * MAP_W + next_x];
-					if (a == 5 || a == 6 || a == 7)
+					if(a == 5 || a == 6 || a == 7)
 					{
 						// 箱があるので押せない
 						push_ok = 0;
@@ -738,16 +758,16 @@ void FrameProcess() {
 						//playerY = old_y;
 						plHP.current_hp += 1;	// 押したのでHPを1減らす
 					}
-					if (item[next_y * MAP_W + next_x] == 2 || item[next_y * MAP_W + next_x] == 3 || item[next_y * MAP_W + next_x] == 4 || item[next_y * MAP_W + next_x] == 18) {
+					if(item[next_y * MAP_W + next_x] == 2 || item[next_y * MAP_W + next_x] == 3 || item[next_y * MAP_W + next_x] == 4 || item[next_y * MAP_W + next_x] == 18) {
 						// アイテムがあるので押せない
 						push_ok = 0;
 						plHP.current_hp += 1;	// 押したのでHPを1減らす
 					}
 
 					// 調べた結果、押せる？
-					if (push_ok == 1)
+					if(push_ok == 1)
 					{
-						if (plHP.current_hp >= 2) {
+						if(plHP.current_hp >= 2) {
 							// HPが2以上なら、押せる
 							plHP.current_hp -= 1;	// 押したのでHPを1減らす
 						}
@@ -778,17 +798,17 @@ void FrameProcess() {
 			}
 		}
 
-		if (plHP.current_hp <= 19 || plHP.current_hp >= 20) {
+		if(plHP.current_hp <= 19 || plHP.current_hp >= 20) {
 			int b = box[playerY * MAP_W + playerX];
 			// 移動した先に箱はあるか？
-			if (b == 5 || b == 6 || b == 7)
+			if(b == 5 || b == 6 || b == 7)
 			{
-				if (b == 6 || b == 7) {
+				if(b == 6 || b == 7) {
 					playerX = old_x;
 					playerY = old_y;
 					plHP.current_hp += 1;	// 押したのでHPを1減らす
 				}
-				else if (b == 5) {
+				else if(b == 5) {
 					int push_ok = 1;
 					// さらに同じ方向のその先の座標を求める（移動方向用変数を足す）
 					int next_x = playerX + move_x;
@@ -796,7 +816,7 @@ void FrameProcess() {
 
 
 					// その先に、壁があるかを調べる
-					if (map[next_y * MAP_W + next_x] == 1)
+					if(map[next_y * MAP_W + next_x] == 1)
 					{
 						// 壁があるので押せない
 						push_ok = 0;
@@ -805,7 +825,7 @@ void FrameProcess() {
 
 					// その先に、箱があるかを調べる
 					int a = box[next_y * MAP_W + next_x];
-					if (a == 5 || a == 6 || a == 7)
+					if(a == 5 || a == 6 || a == 7)
 					{
 						// 箱があるので押せない
 						push_ok = 0;
@@ -813,16 +833,16 @@ void FrameProcess() {
 						playerY = old_y;
 						plHP.current_hp += 1;	// 押したのでHPを1減らす
 					}
-					if (item[next_y * MAP_W + next_x] == 2 || item[next_y * MAP_W + next_x] == 3 || item[next_y * MAP_W + next_x] == 4 || item[next_y * MAP_W + next_x] == 18) {
+					if(item[next_y * MAP_W + next_x] == 2 || item[next_y * MAP_W + next_x] == 3 || item[next_y * MAP_W + next_x] == 4 || item[next_y * MAP_W + next_x] == 18) {
 						// アイテムがあるので押せない
 						push_ok = 0;
 						plHP.current_hp += 1;	// 押したのでHPを1減らす
 					}
 
 					// 調べた結果、押せる？
-					if (push_ok == 1)
+					if(push_ok == 1)
 					{
-						if (plHP.current_hp >= 2) {
+						if(plHP.current_hp >= 2) {
 							// HPが2以上なら、押せる
 							plHP.current_hp -= 1;	// 押したのでHPを1減らす
 						}
@@ -853,21 +873,21 @@ void FrameProcess() {
 			}
 		}
 
-		if (plHP.current_hp >= 20) {
+		if(plHP.current_hp >= 20) {
 			//プレイヤーがゴールにいるか？
-			if (map[playerY * MAP_W + playerX] == 10 ||
+			if(map[playerY * MAP_W + playerX] == 10 ||
 				map[playerY * MAP_W + playerX] == 11 ||
 				map[playerY * MAP_W + playerX] == 12 ||
 				map[playerY * MAP_W + playerX] == 13) {
 				//次のステージへ
-				if (gStageNo + 1 < STAGE_MAX) {
+				if(gStageNo + 1 < STAGE_MAX) {
 					phase = 4;	// クリアフェーズへ
 				}
 			}
 
 		}
-		else if (plHP.current_hp < 20) {
-			if (map[playerY * MAP_W + playerX] == 10 ||
+		else if(plHP.current_hp < 20) {
+			if(map[playerY * MAP_W + playerX] == 10 ||
 				map[playerY * MAP_W + playerX] == 11 ||
 				map[playerY * MAP_W + playerX] == 12 ||
 				map[playerY * MAP_W + playerX] == 13) {
@@ -878,9 +898,9 @@ void FrameProcess() {
 
 		}
 
-		if (plHP.current_hp > 30) {
+		if(plHP.current_hp > 30) {
 			//プレイヤーが最終ゴールにいるか？
-			if (map[playerY * MAP_W + playerX] == 14 ||
+			if(map[playerY * MAP_W + playerX] == 14 ||
 				map[playerY * MAP_W + playerX] == 15 ||
 				map[playerY * MAP_W + playerX] == 16 ||
 				map[playerY * MAP_W + playerX] == 17) {
@@ -896,8 +916,8 @@ void FrameProcess() {
 				//}
 			}
 		}
-		else if (plHP.current_hp <= 30) {
-			if (map[playerY * MAP_W + playerX] == 14 ||
+		else if(plHP.current_hp <= 30) {
+			if(map[playerY * MAP_W + playerX] == 14 ||
 				map[playerY * MAP_W + playerX] == 15 ||
 				map[playerY * MAP_W + playerX] == 16 ||
 				map[playerY * MAP_W + playerX] == 17) {
@@ -908,12 +928,12 @@ void FrameProcess() {
 		}
 	}
 
-	if (plHP.current_hp <= 0) {// HPが0以下になったので、ゲームオーバー
+	if(plHP.current_hp <= 0) {// HPが0以下になったので、ゲームオーバー
 		phase = 5;	// ゲームオーバーフェーズへ
 	}
 
 	// ステージデータリセット（やり直し）
-	if (gTrg & PAD_INPUT_1) {	// [z]
+	if(gTrg & PAD_INPUT_1) {	// [z]
 		StageInit(gStageNo);
 	}
 
@@ -923,8 +943,8 @@ void FrameProcess() {
 	//}
 
 	// 開発用。次のステージへ
-	if (gTrg & PAD_INPUT_2) {	// [x]
-		if (gStageNo + 1 < STAGE_MAX) {
+	if(gTrg & PAD_INPUT_2) {	// [x]
+		if(gStageNo + 1 < STAGE_MAX) {
 			gStageNo++;
 			StageInit(gStageNo);
 		}
@@ -940,7 +960,7 @@ void FrameDraw() {
 
 	int left_up = 0, right_up = 0, left_down = 0, right_down = 0, playerImgIdx = 0;
 
-	switch (phase) // フェーズによって描画を変える
+	switch(phase) // フェーズによって描画を変える
 	{
 	case 0:	// タイトル画面
 		DrawGraph(0, 0, title_image, TRUE);
@@ -949,11 +969,12 @@ void FrameDraw() {
 
 	case 1:	// シナリオ画面
 		// scenariocntが1～29のとき、それぞれ対応するscenario_text_image[]を描画
-		switch (scenarioCnt) {
+		switch(scenarioCnt) {
 		case 0:
 			DrawGraph(0, 0, cgMap, TRUE);
-			DrawGraph(0, 0, scenario_text_image[1], TRUE);
+			DrawGraph(0, 0, scenario_text_image[0], TRUE);
 			DrawGraph(1600, 800, next_image, TRUE);
+			break;
 		case 1:
 			DrawGraph(0, 0, cgMap, TRUE);
 			DrawGraph(120, 200, scenario_slime[0], TRUE);
@@ -1115,7 +1136,7 @@ void FrameDraw() {
 		//エネルギーの表示
 		left_up = plHP.current_hp / 10;
 		right_up = plHP.current_hp % 10;
-		if (plHP.current_hp < 10) {
+		if(plHP.current_hp < 10) {
 			left_up = 0;
 		}
 		DrawGraph(1692, 840, energy_ui_number[left_up], TRUE);
@@ -1133,14 +1154,14 @@ void FrameDraw() {
 		//// マップチップを for ループでひとつひとつ描画する
 		int x, y;
 		//マップチップを描画する
-		for (y = 0; y < MAP_ROW; y++)
+		for(y = 0; y < MAP_ROW; y++)
 		{
-			for (x = 0; x < MAP_COL; x++)
+			for(x = 0; x < MAP_COL; x++)
 			{
 				int drowX = x * CHIP_W;
 				int drowY = y * CHIP_H;
 
-				switch (map[y * MAP_W + x])
+				switch(map[y * MAP_W + x])
 				{
 				case 0:	// 床
 					DrawGraph(drowX, drowY, cgChip[0], TRUE);
@@ -1155,13 +1176,13 @@ void FrameDraw() {
 			}
 		}
 
-		for (y = 0; y < MAP_ROW; y++)
+		for(y = 0; y < MAP_ROW; y++)
 		{
-			for (x = 0; x < MAP_COL; x++)
+			for(x = 0; x < MAP_COL; x++)
 			{
 				int drowX = x * CHIP_W;
 				int drowY = y * CHIP_H;
-				switch (item[y * MAP_W + x])
+				switch(item[y * MAP_W + x])
 				{
 				case 2:	// 食べ物(弱)
 					DrawGraph(drowX, drowY, cgChip[2], TRUE);
@@ -1180,13 +1201,13 @@ void FrameDraw() {
 		}
 
 		// 箱もforループで描画する
-		for (y = 0; y < MAP_H; y++) {
-			for (x = 0; x < MAP_W; x++) {
+		for(y = 0; y < MAP_H; y++) {
+			for(x = 0; x < MAP_W; x++) {
 				// box[] から、チップ番号を取り出す
 				int chip_no = box[y * MAP_W + x];
 				int drowX = x * CHIP_W;
 				int drowY = y * CHIP_H;
-				switch (chip_no)
+				switch(chip_no)
 				{
 				case 5:	// 箱(弱)
 					DrawGraph(drowX, drowY, cgBox[1], TRUE);
@@ -1202,13 +1223,13 @@ void FrameDraw() {
 		}
 
 		// ゴールの表示
-		for (y = 0; y < MAP_ROW; y++)
+		for(y = 0; y < MAP_ROW; y++)
 		{
-			for (x = 0; x < MAP_COL; x++)
+			for(x = 0; x < MAP_COL; x++)
 			{
 				int drowX = x * CHIP_W;
 				int drowY = y * CHIP_H;
-				switch (map[y * MAP_W + x])
+				switch(map[y * MAP_W + x])
 				{
 				case 10:	// ゴール1
 					DrawGraph(drowX, drowY, cggoal[gStageNo][0], TRUE);
@@ -1244,20 +1265,20 @@ void FrameDraw() {
 		// プレイヤー
 		// HPに応じて画像を切り替える
 
-		if (plHP.current_hp >= 30) {
+		if(plHP.current_hp >= 30) {
 			playerImgIdx = 2;	// HPが30以上なら、画像は2番目
 			DrawGraph(playerDrowX, playerDrowY, cgPlayer[playerImgIdx][chara.arrow * 3 + animTbl[(chara.animcnt / chara.animspeed) % 4]], TRUE);
 		}
-		else if (plHP.current_hp >= 20) {
-			playerImgIdx = 1;	// HPが20～29なら、画像は1番目
+		else if(plHP.current_hp >= 20) {
+			playerImgIdx = 1;	// HPが20?29なら、画像は1番目
 			DrawGraph(playerDrowX, playerDrowY, cgPlayer[playerImgIdx][chara.arrow * 3 + animTbl[(chara.animcnt / chara.animspeed) % 4]], TRUE);
 		}
-		else if (plHP.current_hp >= 6) {
-			playerImgIdx = 0;	// HPが6～19なら、画像は0番目
+		else if(plHP.current_hp >= 6) {
+			playerImgIdx = 0;	// HPが6?19なら、画像は0番目
 
 			DrawGraph(playerDrowX, playerDrowY, cgPlayer[playerImgIdx][chara.arrow * 3 + animTbl[(chara.animcnt / chara.animspeed) % 4]], TRUE);
 		}
-		else if (plHP.current_hp <= 5) {
+		else if(plHP.current_hp <= 5) {
 			playerImgIdx = 3;	//HPが5以下なら,画像は3番目
 			DrawGraph(playerDrowX, playerDrowY, cgPlayer[playerImgIdx][chara.arrow * 3 + animTbl[(chara.animcnt / chara.animspeed) % 4]], TRUE);
 		}
@@ -1266,7 +1287,7 @@ void FrameDraw() {
 
 
 		// プレイヤーのHPを表示
-		DrawFormatString(10, 10, GetColor(255, 255, 255), "HP: %d/%d", plHP.current_hp, plHP.max_hp);
+		/*DrawFormatString(10, 10, GetColor(255, 255, 255), "HP: %d/%d", plHP.current_hp, plHP.max_hp);*/
 
 
 		//// 開発用
@@ -1288,7 +1309,7 @@ void FrameDraw() {
 
 
 	case 3: //全ステージクリア画面
-		switch (clear_scenario) {
+		switch(clear_scenario) {
 		case 0:
 			DrawGraph(0, 0, cgMap, TRUE);
 			DrawGraph(120, 0, scenario_slime[6], TRUE);
@@ -1365,8 +1386,8 @@ void FrameDraw() {
 	case 4: //ステージクリア画面
 		DrawGraph(0, 0, cgMap, TRUE);
 		DrawGraph(420, 0, stage_clear_image, TRUE);	// ステージクリア画像を描画
-		if (gTrg & PAD_INPUT_10) {
-			if (gStageNo + 1 < STAGE_MAX) {
+		if(gTrg & PAD_INPUT_10) {
+			if(gStageNo + 1 < STAGE_MAX) {
 				gStageNo++;
 				StageInit(gStageNo);
 			}
@@ -1378,7 +1399,7 @@ void FrameDraw() {
 	case 5: //ゲームオーバー画面
 		DrawGraph(420, 0, game_over_image, TRUE);	// ゲームオーバー画像を描画
 		DrawGraph(1600, 800, next_image, TRUE);//リセットボタン
-		if (gTrg & PAD_INPUT_10) {
+		if(gTrg & PAD_INPUT_10) {
 			StageInit(gStageNo);	// ステージをリセット
 			phase = 2;	// ステージフェーズへ戻る（挙動が正解かわからない）
 		}
@@ -1386,7 +1407,6 @@ void FrameDraw() {
 
 
 	default: // その他のフェーズはゲームを終了させる
-		isGameEnd = true;
 		break;
 	}
 
@@ -1399,7 +1419,7 @@ void GameMain()
 	AppInit();	// 初期化
 
 	// 1フレームループを組む ----------------------------------------------------------
-	while (ProcessMessage() == 0 && !isGameEnd)		// プログラムが終了するまでループ
+	while(ProcessMessage() == 0 && !isGameEnd)		// プログラムが終了するまでループ
 	{
 		FrameInput();	// 入力
 		FrameProcess();	// 計算
